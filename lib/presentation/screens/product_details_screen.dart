@@ -1,9 +1,11 @@
+import 'package:crafty_bay/presentation/screens/reviews_list_screen.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/widgets/product_image_carousel_slider.dart';
 import 'package:crafty_bay/presentation/widgets/size_picker.dart';
 import 'package:crafty_bay/presentation/widgets/wish_button_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -34,20 +36,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Nike Shoe 2024 Latest Edition 808883",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black.withOpacity(0.8)),
-                              ),
-                            ),
-                            _buildCounter(),
-                          ],
-                        ),
+                        _buildProductTitleAndCounter(),
                         _buildReviewFavouriteSection(),
                         const Text(
                           "Color",
@@ -59,17 +48,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const SizedBox(
                           height: 16,
                         ),
-                        ColorPicker(
-                          colors: const [
-                            Colors.black,
-                            Colors.red,
-                            Colors.orange,
-                            Colors.blue,
-                            Colors.purple,
-                            Colors.green,
-                          ],
-                          onchange: (Color selectedColor) {},
-                        ),
+                        _buildColorPicker(),
                         const SizedBox(
                           height: 16,
                         ),
@@ -83,16 +62,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const SizedBox(
                           height: 16,
                         ),
-                        SizePicker(
-                          onchange: (String s) {},
-                          sizes: const [
-                            'M',
-                            'L',
-                            'S',
-                            'XL',
-                            'XXL',
-                          ],
-                        ),
+                        _buildSizePicker(),
                         const SizedBox(
                           height: 16,
                         ),
@@ -118,6 +88,50 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           _buildAddToCartSection(),
         ],
       ),
+    );
+  }
+
+  Widget _buildSizePicker() {
+    return SizePicker(
+      onchange: (String s) {},
+      sizes: const [
+        'M',
+        'L',
+        'S',
+        'XL',
+        'XXL',
+      ],
+    );
+  }
+
+  Widget _buildColorPicker() {
+    return ColorPicker(
+      colors: const [
+        Colors.black,
+        Colors.red,
+        Colors.orange,
+        Colors.blue,
+        Colors.purple,
+        Colors.green,
+      ],
+      onchange: (Color selectedColor) {},
+    );
+  }
+
+  Widget _buildProductTitleAndCounter() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            "Nike Shoe 2024 Latest Edition 808883",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black.withOpacity(0.8)),
+          ),
+        ),
+        _buildCounter(),
+      ],
     );
   }
 
@@ -180,7 +194,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ],
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => const ReviewsListScreen());
+          },
           child: const Text("Reviews"),
         ),
         const WishButtonCard(

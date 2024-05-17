@@ -54,9 +54,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(() => OtpVerificationScreen(
-                          email: _emailTEController.text,
-                        ));
+                    Get.to(
+                      () => OtpVerificationScreen(
+                        email: _emailTEController.text,
+                      ),
+                    );
                   },
                   child: const Text("Next"),
                 ),
