@@ -1,11 +1,17 @@
+import 'package:crafty_bay/data/models/category.dart';
+import 'package:crafty_bay/presentation/state_holders/category_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/home_slider_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:crafty_bay/presentation/widgets/app_bar_icon_button.dart';
 import 'package:crafty_bay/presentation/widgets/category_item.dart';
+import 'package:crafty_bay/presentation/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/widgets/home_carousel_slider.dart';
 import 'package:crafty_bay/presentation/widgets/product_card.dart';
 import 'package:crafty_bay/presentation/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,18 +36,37 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const HomeCarouselSlider(),
+              GetBuilder<HomeSliderController>(builder: (sliderController) {
+                if (sliderController.inProgress) {
+                  return const SizedBox(
+                      height: 200, child: CenteredCircularProgressIndicator());
+                }
+
+                return HomeCarouselSlider(
+                  sliderList: sliderController.sliderList,
+                );
+              }),
               const SizedBox(
                 height: 16,
               ),
               SectionHeader(
                 title: "All Categories",
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.find<MainBottomNavBarController>().selectToCategory();
+                },
               ),
               const SizedBox(
                 height: 120,
               ),
-              _buildCategoryListView(),
+              GetBuilder<CategoryListController>(
+                  builder: (categoryListController) {
+                if (categoryListController.inProgress) {
+                  return const SizedBox(
+                      height: 120, child: CenteredCircularProgressIndicator());
+                }
+                return _buildCategoryListView(
+                    categoryListController.categoryList);
+              }),
               const SizedBox(
                 height: 8,
               ),
@@ -82,14 +107,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCategoryListView() {
+  Widget _buildCategoryListView(List<Category> categoryList) {
     return SizedBox(
       height: 120,
       child: ListView.separated(
-        itemCount: 8,
+        itemCount: categoryList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const CategoryItem();
+          return CategoryItem(
+            category: categoryList[index],
+          );
         },
         separatorBuilder: (BuildContext context, index) {
           return const SizedBox(
