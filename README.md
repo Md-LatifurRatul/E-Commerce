@@ -1,4 +1,4 @@
-# Flutter Inital E-commerce Project
+# crafty_bay
 
 A new Flutter project.
 
