@@ -41,53 +41,57 @@ class ProductCard extends StatelessWidget {
                   child: Image.asset(AssetsPath.productShoeImage),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Nike Sport Shoe 320K Special Edition",
-                      maxLines: 2,
-                      style: TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 13,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Wrap(
-                      spacing: 5,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        const Text(
-                          "\$30",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                        const Wrap(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 20,
-                            ),
-                            Text("3.4"),
-                          ],
-                        ),
-                        WishButtonCard(showAddToWishList: showAddToWishList),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              _buildProductCartDetails(showAddToWishList),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildProductCartDetails(bool showAddToWishList) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Nike Sport Shoe 320K Special Edition",
+            maxLines: 2,
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontSize: 13,
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Wrap(
+            spacing: 5,
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              const Text(
+                "\$30",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              const Wrap(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 20,
+                  ),
+                  Text("3.4"),
+                ],
+              ),
+              WishButtonCard(showAddToWishList: showAddToWishList),
+            ],
+          ),
+        ],
       ),
     );
   }

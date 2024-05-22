@@ -1,4 +1,4 @@
-import 'package:crafty_bay/presentation/controllers/otp_counter_countroller.dart';
+import 'package:crafty_bay/presentation/state_holders/otp_counter_countroller.dart';
 import 'package:crafty_bay/presentation/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/app_logo.dart';
