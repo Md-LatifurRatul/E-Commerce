@@ -55,20 +55,23 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                 alignment: Alignment.center,
                 child: Stack(
                   children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: NetworkImageWidget(
-                          url: slider.image ?? '',
-                          height: double.maxFinite,
-                          width: double.maxFinite,
-                          boxFit: BoxFit.cover,
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: NetworkImageWidget(
+                        url: slider.image ?? '',
+                        height: double.maxFinite,
+                        width: double.maxFinite,
+                        boxFit: BoxFit.cover,
                       ),
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: _buildSliderProductDescription(slider),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          color: Colors.black.withOpacity(0.5),
+                          child: _buildSliderProductDescription(slider),
+                        ),
+                      ),
                     ),
                   ],
                 ),
