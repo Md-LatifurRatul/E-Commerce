@@ -1,10 +1,13 @@
+import 'package:crafty_bay/data/models/cart_item.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class CartProductItem extends StatefulWidget {
-  const CartProductItem({super.key});
+  const CartProductItem({super.key, required this.cartItem});
+
+  final CartItemModel cartItem;
 
   @override
   State<CartProductItem> createState() => _CartProductItemState();
@@ -57,9 +60,9 @@ class _CartProductItemState extends State<CartProductItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              "\$100",
-              style: TextStyle(
+            Text(
+              "\$${widget.cartItem.product?.price ?? 0}",
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -73,16 +76,16 @@ class _CartProductItemState extends State<CartProductItem> {
   }
 
   Widget _buildColorAndSize() {
-    return const Wrap(
+    return Wrap(
       spacing: 16,
       children: [
         Text(
-          "Color: Red",
-          style: TextStyle(color: Colors.black54),
+          "Color: ${widget.cartItem.color ?? ''}",
+          style: const TextStyle(color: Colors.black54),
         ),
         Text(
-          "Size: XL",
-          style: TextStyle(color: Colors.black54),
+          "Size: ${widget.cartItem.size ?? ''}",
+          style: const TextStyle(color: Colors.black54),
         ),
       ],
     );
@@ -103,10 +106,10 @@ class _CartProductItemState extends State<CartProductItem> {
   }
 
   Widget _buildProductName() {
-    return const Text(
-      "Nike shoe 213112134",
+    return Text(
+      widget.cartItem.product?.title ?? '',
       maxLines: 1,
-      style: TextStyle(
+      style: const TextStyle(
           fontSize: 16, color: Colors.black, overflow: TextOverflow.ellipsis),
     );
   }

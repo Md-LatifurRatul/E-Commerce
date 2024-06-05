@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 class OtpCounterController extends GetxController {
-  final _remainingTime = 10.obs;
+  final _remainingTime = 100.obs;
   final _isResendEnabled = false.obs;
   late Timer _timer;
 
@@ -25,7 +25,7 @@ class OtpCounterController extends GetxController {
   }
 
   void resendCode() {
-    _remainingTime.value = 10;
+    _remainingTime.value = 100;
     _isResendEnabled.value = false;
     startTimer();
   }

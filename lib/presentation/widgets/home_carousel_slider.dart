@@ -126,29 +126,29 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
 
   Widget _buildDotIndicator() {
     return ValueListenableBuilder(
-        valueListenable: _selectedPageIndex,
-        builder: (context, currentPage, _) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int i = 0; i < widget.sliderList.length; i++)
-                Container(
-                  width: 15,
-                  height: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  decoration: BoxDecoration(
-                    color: i == currentPage ? AppColors.primaryColor : null,
-                    border: Border.all(
-                      color: i == currentPage
-                          ? AppColors.primaryColor
-                          : Colors.grey,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
+      valueListenable: _selectedPageIndex,
+      builder: (context, currentPage, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.sliderList.length; i++)
+              Container(
+                width: 15,
+                height: 15,
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                decoration: BoxDecoration(
+                  color: i == currentPage ? AppColors.primaryColor : null,
+                  border: Border.all(
+                    color:
+                        i == currentPage ? AppColors.primaryColor : Colors.grey,
+                    width: 1,
                   ),
+                  borderRadius: BorderRadius.circular(50),
                 ),
-            ],
-          );
-        });
+              ),
+          ],
+        );
+      },
+    );
   }
 }
