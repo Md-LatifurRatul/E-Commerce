@@ -1,6 +1,9 @@
 import 'package:crafty_bay/data/models/product.dart';
 import 'package:crafty_bay/presentation/screens/product_details_screen.dart';
+import 'package:crafty_bay/presentation/state_holders/delete_wish_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/wish_list_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
+import 'package:crafty_bay/presentation/widgets/snack_message.dart';
 import 'package:crafty_bay/presentation/widgets/wish_button_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +50,7 @@ class ProductCard extends StatelessWidget {
                   child: Image.network(product.image ?? ''),
                 ),
               ),
-              _buildProductCartDetails(showAddToWishList),
+              _buildProductCartDetails(showAddToWishList, context),
             ],
           ),
         ),
@@ -55,7 +58,8 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProductCartDetails(bool showAddToWishList) {
+  Widget _buildProductCartDetails(
+      bool showAddToWishList, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -94,7 +98,27 @@ class ProductCard extends StatelessWidget {
                   Text("${product.star}"),
                 ],
               ),
-              //  WishButtonCard(showAddToWishList: showAddToWishList),
+              WishButtonCard(
+                showAddToWishList: showAddToWishList,
+                isSelected: false,
+                onTap: () async {
+                  final deleteWishListController =
+                      Get.find<DeleteWishListController>();
+                  final wishListController = Get.find<WishListController>();
+
+                  bool isDeleted = await deleteWishListController
+                      .deleteWishList(product.id!);
+
+                  if (isDeleted) {
+                    showSnackMessage(context, 'Item Removed from Wishlist');
+                    await wishListController
+                        .getWishList(); // Fetch updated wishlist
+                  } else {
+                    showSnackMessage(
+                        context, deleteWishListController.errorMessage);
+                  }
+                },
+              ),
             ],
           ),
         ],

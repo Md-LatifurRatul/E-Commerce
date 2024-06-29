@@ -1,8 +1,11 @@
+import 'package:crafty_bay/data/models/review_product_list_data.dart';
 import 'package:flutter/material.dart';
 
 class ReviewsCard extends StatelessWidget {
+  final ReviewProductListData reviewProductListData;
   const ReviewsCard({
     super.key,
+    required this.reviewProductListData,
   });
 
   @override
@@ -31,9 +34,9 @@ class ReviewsCard extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text(
-                    'Rabbil Hasan',
-                    style: TextStyle(
+                  Text(
+                    reviewProductListData.profile?.cusName ?? '',
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
@@ -44,7 +47,7 @@ class ReviewsCard extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                '''Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator. Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.''',
+                reviewProductListData.description ?? '',
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
             ],

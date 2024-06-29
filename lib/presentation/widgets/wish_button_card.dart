@@ -1,7 +1,7 @@
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class WishButtonCard extends StatelessWidget {
+class WishButtonCard extends StatefulWidget {
   const WishButtonCard(
       {super.key,
       this.showAddToWishList = true,
@@ -13,11 +13,39 @@ class WishButtonCard extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<WishButtonCard> createState() => _WishButtonCardState();
+}
+
+class _WishButtonCardState extends State<WishButtonCard> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
+
+  void _toggleSelection() {
+    setState(() {
+      _isSelected = !_isSelected;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: showAddToWishList,
-        replacement: _getIconButton(Icons.delete_outline),
-        child: InkWell(onTap: onTap, child: _getIconButton(_getIconData())));
+      visible: widget.showAddToWishList,
+      replacement: _getIconButton(Icons.delete_outline),
+      child: InkWell(
+        onTap: () {
+          widget.onTap();
+          _toggleSelection();
+        },
+        child: _getIconButton(
+          _isSelected ? Icons.favorite : Icons.favorite_outline_rounded,
+        ),
+      ),
+    );
   }
 
   Widget _getIconButton(IconData icon) {
@@ -35,9 +63,5 @@ class WishButtonCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  IconData _getIconData() {
-    return isSelected ? Icons.favorite : Icons.favorite_outline_rounded;
   }
 }

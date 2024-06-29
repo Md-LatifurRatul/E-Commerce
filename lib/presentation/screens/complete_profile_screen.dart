@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:crafty_bay/data/models/create_profile_model.dart';
 import 'package:crafty_bay/presentation/screens/home_screen.dart';
 import 'package:crafty_bay/presentation/state_holders/create_profile_controller.dart';
@@ -64,57 +62,58 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 _buildCompleteProfileForm(),
                 const SizedBox(height: 16),
                 GetBuilder<CreateProfileController>(
-                    builder: (createProfileController) {
-                  if (createProfileController.inProgress) {
-                    return const CenteredCircularProgressIndicator();
-                  }
+                  builder: (createProfileController) {
+                    if (createProfileController.inProgress) {
+                      return const CenteredCircularProgressIndicator();
+                    }
 
-                  return ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        CreateProfileModel createProfileModel =
-                            CreateProfileModel(
-                          userId: _userIdTEController.text,
-                          cusName: _nameTEController.text,
-                          cusAdd: _cityTEController.text,
-                          cusCity: _cityTEController.text,
-                          cusState: _stateTEController.text,
-                          cusPostcode: _postcodeTEController.text,
-                          cusCountry: _countryTEController.text,
-                          cusPhone: _mobileTEController.text,
-                          cusFax: _faxTEController.text,
-                          shipName: _shippingNameTEController.text,
-                          shipAdd: _shippingAddressTEController.text,
-                          shipCity: _shippingCityTEController.text,
-                          shipState: _shippingStateTEController.text,
-                          shipPostcode: _shippingPostcodeTEController.text,
-                          shipCountry: _shippingCountryTEController.text,
-                          shipPhone: _shippingPhoneTEController.text,
-                          updatedAt: DateTime.now().toString(),
-                          createdAt: DateTime.now().toString(),
-                          id: int.tryParse(_idTEController.text) ?? 0,
-                        );
+                    return ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          CreateProfileModel createProfileModel =
+                              CreateProfileModel(
+                            userId: _userIdTEController.text,
+                            cusName: _nameTEController.text,
+                            cusAdd: _cityTEController.text,
+                            cusCity: _cityTEController.text,
+                            cusState: _stateTEController.text,
+                            cusPostcode: _postcodeTEController.text,
+                            cusCountry: _countryTEController.text,
+                            cusPhone: _mobileTEController.text,
+                            cusFax: _faxTEController.text,
+                            shipName: _shippingNameTEController.text,
+                            shipAdd: _shippingAddressTEController.text,
+                            shipCity: _shippingCityTEController.text,
+                            shipState: _shippingStateTEController.text,
+                            shipPostcode: _shippingPostcodeTEController.text,
+                            shipCountry: _shippingCountryTEController.text,
+                            shipPhone: _shippingPhoneTEController.text,
+                            updatedAt: DateTime.now().toString(),
+                            createdAt: DateTime.now().toString(),
+                            id: int.tryParse(_idTEController.text) ?? 0,
+                          );
 
-                        bool isSuccess = await createProfileController
-                            .createProfile(createProfileModel);
+                          bool isSuccess = await createProfileController
+                              .createProfile(createProfileModel);
 
-                        if (isSuccess) {
-                          if (mounted) {
-                            showSnackMessage(
-                                context, "Profile Created successfully");
-                          }
-                          Get.offAll(() => const HomeScreen());
-                        } else {
-                          if (mounted) {
-                            showSnackMessage(
-                                context, createProfileController.errorMessage);
+                          if (isSuccess) {
+                            if (mounted) {
+                              showSnackMessage(
+                                  context, "Profile Created successfully");
+                            }
+                            Get.offAll(() => const HomeScreen());
+                          } else {
+                            if (mounted) {
+                              showSnackMessage(context,
+                                  createProfileController.errorMessage);
+                            }
                           }
                         }
-                      }
-                    },
-                    child: const Text('Complete'),
-                  );
-                }),
+                      },
+                      child: const Text('Complete'),
+                    );
+                  },
+                ),
               ],
             ),
           ),

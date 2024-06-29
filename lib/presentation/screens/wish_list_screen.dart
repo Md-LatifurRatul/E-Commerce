@@ -36,35 +36,37 @@ class _WishListScreenState extends State<WishListScreen> {
             icon: const Icon(Icons.arrow_back_sharp),
           ),
         ),
-        body: GetBuilder<WishListController>(builder: (wishListController) {
-          if (wishListController.inProgress) {
-            return const CenteredCircularProgressIndicator();
-          }
-          return RefreshIndicator(
-            onRefresh: () async {
-              wishListController.getWishList();
-            },
-            child: GridView.builder(
-              itemCount: wishListController.wishList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.8,
-              ),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                  child: FittedBox(
-                    child: ProductCard(
-                      showAddToWishList: false,
-                      product: wishListController.wishList[index].product!,
-                    ),
-                  ),
-                );
+        body: GetBuilder<WishListController>(
+          builder: (wishListController) {
+            if (wishListController.inProgress) {
+              return const CenteredCircularProgressIndicator();
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                wishListController.getWishList();
               },
-            ),
-          );
-        }),
+              child: GridView.builder(
+                itemCount: wishListController.wishList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.8,
+                ),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                    child: FittedBox(
+                      child: ProductCard(
+                        showAddToWishList: false,
+                        product: wishListController.wishList[index].product!,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

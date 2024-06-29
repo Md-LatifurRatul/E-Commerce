@@ -1,20 +1,32 @@
 import 'package:crafty_bay/data/models/cart_item.dart';
+import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/delete_cart_list_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
-import 'package:crafty_bay/presentation/utility/assets_path.dart';
+import 'package:crafty_bay/presentation/widgets/snack_message.dart';
+//import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class CartProductItem extends StatefulWidget {
-  const CartProductItem({super.key, required this.cartItem});
+  const CartProductItem(
+      {super.key, required this.cartItem, required this.productId});
 
   final CartItemModel cartItem;
+  final int productId;
 
   @override
   State<CartProductItem> createState() => _CartProductItemState();
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-  int _counterValue = 1;
+  late int _counterValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterValue = widget.cartItem.qty!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +63,26 @@ class _CartProductItemState extends State<CartProductItem> {
                 ],
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.delete_outline_sharp),
+            GetBuilder<DeleteCartListController>(
+              builder: (deleteCartListController) {
+                if (deleteCartListController.inProgress) {
+                  return const CircularProgressIndicator();
+                }
+                return IconButton(
+                  onPressed: () async {
+                    bool isDeleted = await deleteCartListController
+                        .deleteCarList(widget.productId);
+                    if (isDeleted) {
+                      showSnackMessage(context, 'Item Deleted Successfully');
+                      Get.find<CartListController>().getCartList();
+                    } else {
+                      showSnackMessage(
+                          context, deleteCartListController.errorMessage);
+                    }
+                  },
+                  icon: const Icon(Icons.delete_outline_sharp),
+                );
+              },
             ),
           ],
         ),
@@ -101,6 +130,8 @@ class _CartProductItemState extends State<CartProductItem> {
       onChanged: (value) {
         _counterValue = value as int;
         setState(() {});
+        Get.find<CartListController>()
+            .changeProductQuantity(widget.cartItem.id!, _counterValue);
       },
     );
   }
@@ -118,7 +149,7 @@ class _CartProductItemState extends State<CartProductItem> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Image.asset(
-        AssetsPath.productShoeImage,
+        widget.cartItem.product?.image ?? '',
         width: 100,
       ),
     );

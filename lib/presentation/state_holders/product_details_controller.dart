@@ -31,6 +31,7 @@ class ProductDetailsController extends GetxController {
           ProductDetailsWrapperModel.fromJson(response.responseData)
               .productDetails!
               .first;
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

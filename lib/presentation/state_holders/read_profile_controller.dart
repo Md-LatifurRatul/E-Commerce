@@ -25,6 +25,7 @@ class ReadProfileController extends GetxController {
     if (response.isSuccess) {
       _readProfile =
           ReadProfileModel.fromJson(response.responseData).readProfile;
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

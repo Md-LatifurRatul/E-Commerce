@@ -25,6 +25,7 @@ class HomeSliderController extends GetxController {
     if (response.isSuccess) {
       _sliderList =
           SliderListModel.fromJson(response.responseData).sliderList ?? [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

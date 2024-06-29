@@ -25,6 +25,7 @@ class CategoryListController extends GetxController {
     if (response.isSuccess) {
       _categoryList =
           CategoryListModel.fromJson(response.responseData).categoryList ?? [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }
