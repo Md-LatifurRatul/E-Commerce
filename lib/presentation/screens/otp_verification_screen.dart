@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:crafty_bay/presentation/screens/home_screen.dart';
 import 'package:crafty_bay/presentation/state_holders/otp_counter_countroller.dart';
 import 'package:crafty_bay/presentation/screens/complete_profile_screen.dart';
@@ -161,19 +159,4 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       },
     );
   }
-
-  @override
-  void dispose() {
-    _otpTEController.dispose();
-    super.dispose();
-  }
 }
-
-
-
-   //Todo: 1: If Sucess, then call another api named "readProfile"
-        //a: create read profile controller
-// 2: check if data is null or not if null then move to the
-    // complete profile screen then move to the home page
-      //b: Create profile controller
-      //3: Otherwise back to the home page

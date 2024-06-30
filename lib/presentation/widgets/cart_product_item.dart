@@ -3,7 +3,6 @@ import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart'
 import 'package:crafty_bay/presentation/state_holders/delete_cart_list_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/snack_message.dart';
-//import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
